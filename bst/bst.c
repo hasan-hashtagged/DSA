@@ -36,7 +36,16 @@ void postorder(struct node *p) {
 	postorder(p->right);
 	printf("%d ",p->data);
 }
-
+int find(int x,struct node *p) {
+	if(p==NULL)
+		return -1;
+	else if(p->data==x)
+		return 1;
+	else if(p->data>x)
+		find(x,p->left);
+	else
+		find(x,p->right);
+}
 int main() {
 	char ch;
 	int x;
@@ -60,6 +69,13 @@ int main() {
 		else if(ch=='b') {
 			postorder(root);
 			printf("\n");
+		}
+		else if(ch=='f') {
+			scanf("%d",&x);
+			if(find(x,root)==1)
+				printf("Found\n");
+			else
+				printf("Not Found\n");
 		}
 		else if(ch=='s')
 			break;
