@@ -46,6 +46,20 @@ int find(int x,struct node *p) {
 	else
 		find(x,p->right);
 }
+int find_min(struct node *p) {
+	if(p==NULL)
+		return -1;
+	while(p->left)
+		p=p->left;
+	return (p->data);
+}
+int find_max(struct node *p) {
+	if(p==NULL)
+		return -1;
+	while(p->right)
+		p=p->right;
+	return (p->data);
+}
 int main() {
 	char ch;
 	int x;
@@ -76,6 +90,14 @@ int main() {
 				printf("Found\n");
 			else
 				printf("Not Found\n");
+		}
+		else if(ch=='m') {
+			x=find_min(root);
+			printf("%d\n",x);
+		}
+		else if(ch=='M') {
+			x=find_max(root);
+			printf("%d\n",x);
 		}
 		else if(ch=='s')
 			break;
