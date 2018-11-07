@@ -46,12 +46,12 @@ struct node *find(int x,struct node *p) {
 	else
 		find(x,p->right);
 }
-int find_min(struct node *p) {
+struct node *find_min(struct node *p) {
 	if(p==NULL)
-		return -1;
+		return p;
 	while(p->left)
 		p=p->left;
-	return (p->data);
+	return (p);
 }
 struct node *find_max(struct node *p) {
 	if(p==NULL)
@@ -75,6 +75,23 @@ struct node *predecessor(int x,struct node *p) {
 				temp=temp->left;
 		}
 		return pre;
+	}
+}
+struct node *successor(int x,struct node *p) {
+	struct node *q=find(x,root);
+	if(q->right)
+		return (find_min(q->right));
+	else {
+		struct node *succ=NULL,*temp=p;
+		while(q!=temp) {
+			if(q->data < temp->data) {
+				succ=temp;
+				temp=temp->left;
+			}
+			else
+				temp=temp->right;
+		}
+		return succ;
 	}
 }
 int main() {
@@ -109,8 +126,11 @@ int main() {
 				printf("Not Found\n");
 		}
 		else if(ch=='m') {
-			x=find_min(root);
-			printf("%d\n",x);
+			struct node *p=find_min(root);
+			if(p)
+				printf("%d\n",p->data);
+			else
+				printf("-1\n");
 		}
 		else if(ch=='M') {
 			struct node *p=find_max(root);
@@ -119,16 +139,28 @@ int main() {
 			else
 				printf("-1\n");
 		}
-		else if(ch=='r') {
+		else if(ch=='r') { //inorder predecessor
 			scanf("%d",&x);
-			if(root==NULL || (find(x,root)==NULL))
+			if(root==NULL || (find(x,root)==NULL)) //the number is not present
 				printf("NOT FOUND\n");
 			else {
 				struct node *p=predecessor(x,root);
 				if(p)
 					printf("%d\n",p->data);
 				else
-					printf("NIL\n");
+					printf("NIL\n"); //No predecessor
+			}
+		}
+		else if(ch=='s') { //inorder successor
+			scanf("%d",&x);
+			if(root==NULL || (find(x,root)==NULL))
+				printf("NOT FOUND\n");
+			else {
+				struct node *p=successor(x,root);
+				if(p)
+					printf("%d\n",p->data);
+				else
+					printf("NIL\n"); //No successor
 			}
 		}
 		else if(ch=='z')
