@@ -94,6 +94,25 @@ struct node *successor(int x,struct node *p) {
 		return succ;
 	}
 }
+struct node *delete(int x,struct node *p) {
+	if(p->data > x)
+		p->left=delete(x,p->left);
+	else if(p->data < x)
+		p->right=delete(x,p->right);
+	else {
+		if(p->left==NULL) {
+			struct node *q=p->right;
+			p->right=NULL;
+			return q;
+		}
+		else if(p->right==NULL) {
+			struct node *q=p->left;
+			p->left=NULL;
+			return q;
+		}
+	}
+	//return p;
+}
 int main() {
 	char ch;
 	int x;
@@ -162,6 +181,13 @@ int main() {
 				else
 					printf("NIL\n"); //No successor
 			}
+		}
+		else if(ch=='d') {
+			scanf("%d",&x);
+			if(find(x,root)==NULL)
+				printf("-1\n");
+			else
+				root=delete(x,root);
 		}
 		else if(ch=='z')
 			break;
