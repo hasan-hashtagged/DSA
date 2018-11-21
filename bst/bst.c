@@ -110,6 +110,13 @@ struct node *delete(int x,struct node *p) {
 			p->left=NULL;
 			return q;
 		}
+		else {
+			struct node *q=find_min(p->right),*r=p->right;
+			q->left=p->left;
+			p->left=NULL;
+			p->right=NULL;
+			return r;
+		}
 	}
 	//return p;
 }
